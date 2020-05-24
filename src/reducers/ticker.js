@@ -1,6 +1,8 @@
+import actionTypes from '../actions/actionTypes'
+
 const ticker = (state = '', action) => {
   switch (action.type) {
-    case 'EDIT_TICKER':
+    case actionTypes.EDIT_TICKER:
       return action.value
     default:
       return state

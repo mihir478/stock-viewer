@@ -1,15 +1,15 @@
 /* Adapted from https://material-ui.com/components/app-bar/ */
 
-import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { fade, makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
-import SearchIcon from '@material-ui/icons/Search';
-import actions from '../actions';
+import React from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { fade, makeStyles } from '@material-ui/core/styles'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import InputBase from '@material-ui/core/InputBase'
+import SearchIcon from '@material-ui/icons/Search'
+import actions from '../actions'
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -73,10 +73,10 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
-}));
+}))
 
 const PrimarySearchAppBar = ({ticker, editTicker}) => {
-  const classes = useStyles();
+  const classes = useStyles()
   return (
     <div className={classes.grow}>
       <AppBar position="static">
@@ -103,20 +103,20 @@ const PrimarySearchAppBar = ({ticker, editTicker}) => {
         </Toolbar>
       </AppBar>
     </div>
-  );
+  )
 }
 
 PrimarySearchAppBar.propTypes = {
-  ticker: PropTypes.string,
-  editTicker: PropTypes.func
+  ticker: PropTypes.string.isRequired,
+  editTicker: PropTypes.func.isRequired
 }
 
 export const mapStateToProps = store => ({
   ticker: store.ticker
-});
+})
 
 export const mapDispatchToProps = dispatch => ({
   editTicker: ticker => dispatch(actions.editTicker(ticker))
-});
+})
 
-export default connect(mapStateToProps, mapDispatchToProps)(PrimarySearchAppBar);
+export default connect(mapStateToProps, mapDispatchToProps)(PrimarySearchAppBar)

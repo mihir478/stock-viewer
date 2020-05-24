@@ -4,12 +4,14 @@
     "plugin:react/recommended"
   ],
   "globals": {
+    "__dirname": "readonly",
     "document": "readonly",
-    "window": "readonly",
+    "IEX_API_KEY": "readonly",
+    "IEX_CLOUD_API_URL": "readonly",
+    "module": "readonly",
     "process": "readonly",
     "require": "readonly",
-    "module": "readonly",
-    "__dirname": "readonly"
+    "window": "readonly"
   },
   "parserOptions": {
     "ecmaVersion": 11,
