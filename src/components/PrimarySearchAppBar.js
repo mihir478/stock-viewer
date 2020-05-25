@@ -75,6 +75,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
+// TODO debouce onChange
 const PrimarySearchAppBar = ({ticker, editTicker}) => {
   const classes = useStyles()
   return (
