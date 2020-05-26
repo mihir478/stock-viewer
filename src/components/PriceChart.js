@@ -1,4 +1,4 @@
-import palette from '../theme/palette';
+import palette from '../theme/palette'
 
 export const options = {
   responsive: true,
@@ -30,17 +30,8 @@ export const options = {
       {
         ticks: {
           fontColor: palette.text.secondary
-        },
-        gridLines: {
-          borderDash: [2],
-          borderDashOffset: [2],
-          color: palette.divider,
-          drawBorder: false,
-          zeroLineBorderDash: [2],
-          zeroLineBorderDashOffset: [2],
-          zeroLineColor: palette.divider
         }
       }
     ]
   }
-};
+}

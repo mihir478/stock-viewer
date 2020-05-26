@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { fetchSummaryStats, fetchTimeseries } from '../actions'
 import { CircularProgress, Typography } from '@material-ui/core'
 import withStyles from '@material-ui/core/styles/withStyles'
 import Summary from './Summary'
 import Timeseries from './Timeseries'
+import actions from '../actions'
+import { fetchSummaryStats, fetchTimeseries } from '../actions'
 
 const styles = () => ({
   root: {
@@ -23,32 +24,37 @@ class ConditionalRenderer extends Component {
   }
 
   componentDidMount() {
-    const { dispatch, ticker, interval } = this.props
+    const { fetchSummaryStats, fetchTimeseries, ticker, interval } = this.props
     if (ticker) {
-      dispatch(fetchSummaryStats(ticker))
+      fetchSummaryStats(ticker)
       if (interval) {
-        dispatch(fetchTimeseries(ticker, interval))
+        fetchTimeseries(ticker, interval)
       }
     }
   }
 
   componentDidUpdate(prevProps) {
-    const { dispatch, ticker, interval } = this.props
+    const { fetchSummaryStats, fetchTimeseries, ticker, interval } = this.props
     if (ticker && ticker !== prevProps.ticker) {
-      dispatch(fetchSummaryStats(ticker))
-      dispatch(fetchTimeseries(ticker, interval))
+      fetchSummaryStats(ticker)
+      fetchTimeseries(ticker, interval)
     }
     else if (interval && interval !== prevProps.interval) {
-      dispatch(fetchTimeseries(ticker, interval))
+      fetchTimeseries(ticker, interval)
     }
   }
 
   render() {
     const classes = styles()
-    const { ticker, interval, summaryJson, summaryStatus, summaryIsFetching,
-     timeseriesJson, timeseriesStatus, timeseriesIsFetching } = this.props
+    const {
+      ticker, interval, editInterval,
+      summaryJson, summaryStatus, summaryIsFetching,
+      timeseriesJson, timeseriesStatus, timeseriesIsFetching 
+    } = this.props
+    
     const isSummaryError = summaryStatus >= 400 // TODO dedup
     const isTimeseriesError = timeseriesStatus >= 400
+
     return (
       <div className={classes.root}>
         {summaryIsFetching && <CircularProgress />}
@@ -67,6 +73,7 @@ class ConditionalRenderer extends Component {
           className={classes.chartContainer}
           data={timeseriesJson}
           interval={interval}
+          onIntervalChange={editInterval}
           />}
       </div>
     )
@@ -81,7 +88,10 @@ ConditionalRenderer.propTypes = {
   summaryIsFetching: PropTypes.bool.isRequired,
   timeseriesJson: PropTypes.array,
   timeseriesStatus: PropTypes.number.isRequired,
-  timeseriesIsFetching: PropTypes.bool.isRequired
+  timeseriesIsFetching: PropTypes.bool.isRequired,
+  editInterval: PropTypes.func.isRequired,
+  fetchSummaryStats: PropTypes.func.isRequired,
+  fetchTimeseries: PropTypes.func.isRequired
 }
 
 export const mapStateToProps = store => ({
@@ -95,4 +105,10 @@ export const mapStateToProps = store => ({
   timeseriesIsFetching: store.timeseries.isFetching
 })
 
-export default withStyles(styles)(connect(mapStateToProps)(ConditionalRenderer))
+export const mapDispatchToProps = dispatch => ({
+  editInterval: interval => dispatch(actions.editInterval(interval)),
+  fetchSummaryStats: ticker => dispatch(fetchSummaryStats(ticker)),
+  fetchTimeseries: (ticker, interval) => dispatch(fetchTimeseries(ticker, interval))
+})
+
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(ConditionalRenderer))

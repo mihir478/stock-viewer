@@ -34,11 +34,12 @@ const actions = {
 
 /* API CALLS */
 
+// Note that promises need to be resolved twice when using cross fetch.
+
 export const fetchSummaryStats = ticker => {
   return dispatch => {
     dispatch(actions.requestSummaryStats(ticker))
     let status
-    // promise needs to be resolved twice
     return fetch(`${IEX_CLOUD_API_URL}/stock/${ticker}/company?token=${IEX_API_KEY}`)
       .then(response => {
         status = response.status

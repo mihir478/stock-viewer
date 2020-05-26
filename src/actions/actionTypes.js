@@ -1,3 +1,5 @@
+// Create an enumeration of actions to avoid typos.
+
 const actionTypes = {
   EDIT_TICKER: 'EDIT_TICKER',
   REQUEST_SUMMARY: 'REQUEST_SUMMARY',
