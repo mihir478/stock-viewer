@@ -1,34 +1,46 @@
-import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
-import {
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
-} from 'recharts'
+import palette from '../theme/palette';
 
-class PriceChart extends PureComponent {
-  render() {
-    return (
-      <LineChart
-        width={500}
-        height={300}
-        data={this.props.data}
-        margin={{
-          top: 5, right: 30, left: 20, bottom: 5,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="date" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Line type="monotone" dataKey="close" stroke="lightblue" activeDot={{ r: 8 }} />
-      </LineChart>
-    )
+export const options = {
+  responsive: true,
+  maintainAspectRatio: false,
+  animation: false,
+  legend: { display: false },
+  cornerRadius: 20,
+  tooltips: {
+    enabled: true,
+    mode: 'index',
+    intersect: false,
+    borderWidth: 1,
+    borderColor: palette.divider,
+    backgroundColor: palette.white,
+    titleFontColor: palette.text.primary,
+    bodyFontColor: palette.text.secondary,
+    footerFontColor: palette.text.secondary
+  },
+  layout: { padding: 0 },
+  scales: {
+    xAxes: [
+      {
+        ticks: {
+          fontColor: palette.text.secondary
+        }
+      }
+    ],
+    yAxes: [
+      {
+        ticks: {
+          fontColor: palette.text.secondary
+        },
+        gridLines: {
+          borderDash: [2],
+          borderDashOffset: [2],
+          color: palette.divider,
+          drawBorder: false,
+          zeroLineBorderDash: [2],
+          zeroLineBorderDashOffset: [2],
+          zeroLineColor: palette.divider
+        }
+      }
+    ]
   }
-}
-
-PriceChart.propTypes = {
-    data: PropTypes.array.isRequired    
-}
-
-
-export default PriceChart
+};

@@ -3,13 +3,13 @@ import PrimarySearchAppBar from './PrimarySearchAppBar'
 import ConditionalRenderer from '../containers/ConditionalRenderer'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import blue from '@material-ui/core/colors/blue'
-import green from '@material-ui/core/colors/green'
+import orange from '@material-ui/core/colors/orange'
 
 const App = () => {
   const theme = createMuiTheme({
     palette: {
       primary: blue,
-      secondary: green
+      secondary: orange
     },
   })
   return (

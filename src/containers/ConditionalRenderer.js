@@ -4,13 +4,17 @@ import { connect } from 'react-redux'
 import { fetchSummaryStats, fetchTimeseries } from '../actions'
 import { CircularProgress, Typography } from '@material-ui/core'
 import withStyles from '@material-ui/core/styles/withStyles'
-import Dashboard from './Dashboard'
-import PriceChart from '../components/PriceChart'
+import Summary from './Summary'
+import Timeseries from './Timeseries'
 
 const styles = () => ({
   root: {
     display: 'flex'
-  }
+  },
+  chartContainer: {
+    height: 400,
+    position: 'relative'
+  },
 })
 
 class ConditionalRenderer extends Component {
@@ -29,7 +33,7 @@ class ConditionalRenderer extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { dispatch, ticker, interval, timeseriesJson } = this.props
+    const { dispatch, ticker, interval } = this.props
     if (ticker && ticker !== prevProps.ticker) {
       dispatch(fetchSummaryStats(ticker))
       dispatch(fetchTimeseries(ticker, interval))
@@ -41,7 +45,7 @@ class ConditionalRenderer extends Component {
 
   render() {
     const classes = styles()
-    const { ticker, summaryJson, summaryStatus, summaryIsFetching,
+    const { ticker, interval, summaryJson, summaryStatus, summaryIsFetching,
      timeseriesJson, timeseriesStatus, timeseriesIsFetching } = this.props
     const isSummaryError = summaryStatus >= 400 // TODO dedup
     const isTimeseriesError = timeseriesStatus >= 400
@@ -50,15 +54,20 @@ class ConditionalRenderer extends Component {
         {summaryIsFetching && <CircularProgress />}
         {!summaryIsFetching && ticker && isSummaryError && <Typography color="error">{summaryJson}</Typography>}
         {!summaryIsFetching && ticker && summaryJson && !isSummaryError &&
-        <Dashboard
+        <Summary
           companyName={summaryJson.companyName}
           employees={summaryJson.employees}
           industry={summaryJson.industry}
+          sector={summaryJson.sector}
         />}
         {timeseriesIsFetching && <CircularProgress />}
         {!timeseriesIsFetching && ticker && isTimeseriesError && <Typography color="error">{timeseriesJson}</Typography>}
         {!timeseriesIsFetching && ticker && timeseriesJson && !isTimeseriesError &&
-        <PriceChart data={timeseriesJson} />}
+        <Timeseries 
+          className={classes.chartContainer}
+          data={timeseriesJson}
+          interval={interval}
+          />}
       </div>
     )
   }
@@ -72,8 +81,7 @@ ConditionalRenderer.propTypes = {
   summaryIsFetching: PropTypes.bool.isRequired,
   timeseriesJson: PropTypes.array,
   timeseriesStatus: PropTypes.number.isRequired,
-  timeseriesIsFetching: PropTypes.bool.isRequired,
-  dispatch: PropTypes.func.isRequired
+  timeseriesIsFetching: PropTypes.bool.isRequired
 }
 
 export const mapStateToProps = store => ({

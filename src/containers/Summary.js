@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const Dashboard = ({companyName, employees, industry}) => {
+const Summary = ({companyName, employees, industry, sector}) => {
   const classes = useStyles()
 
   return (
@@ -56,15 +56,28 @@ const Dashboard = ({companyName, employees, industry}) => {
             value={industry}
           />
         </Grid>
+        <Grid
+          item
+          lg={3}
+          sm={6}
+          xl={3}
+          xs={12}
+        >
+          <SummaryCard 
+            label="Sector"
+            value={sector}
+          />
+        </Grid>
       </Grid>
     </div>
   )
 }
 
-Dashboard.propTypes = {
+Summary.propTypes = {
   companyName: PropTypes.string.isRequired,
   employees: PropTypes.number.isRequired,
-  industry: PropTypes.string.isRequired
+  industry: PropTypes.string.isRequired,
+  sector: PropTypes.string.isRequired
 }
 
-export default Dashboard
+export default Summary
