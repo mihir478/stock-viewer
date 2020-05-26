@@ -24,8 +24,8 @@ const CumulativeReturn = props => {
   const lastDatum = data[data.length - 1].close
   const firstDatum = data[0].close
   const cumulativeReturn = (lastDatum - firstDatum) / firstDatum * 100
-  const cumulativeReturnFormatted = `${Number(cumulativeReturn).toFixed(2)}%`
-  const color = cumulativeReturn >= 0 ? palette.success.main : palette.error.main;
+  const cumulativeReturnFormatted = `${Number(cumulativeReturn).toFixed(2)}`
+  const color = cumulativeReturn >= 0 ? palette.success.main : palette.error.main
 
   const { className, ...rest } = props
   return (
@@ -45,7 +45,7 @@ const CumulativeReturn = props => {
                 gutterBottom
                 variant="body2"
               >
-                Cumulative Return
+                Cumulative Return (%)
               </Typography>
               <Typography 
                 variant="h5"

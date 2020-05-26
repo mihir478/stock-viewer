@@ -9,6 +9,7 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import InputBase from '@material-ui/core/InputBase'
 import SearchIcon from '@material-ui/icons/Search'
+import debounce from 'lodash.debounce'
 import actions from '../actions'
 
 const useStyles = makeStyles((theme) => ({
@@ -75,8 +76,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-// TODO debouce onChange
-const PrimarySearchAppBar = ({ticker, editTicker}) => {
+const PrimarySearchAppBar = ({editTicker}) => {
+  const debouncedOnChange = (event) => {
+    event.persist() // Prevent event from being cleared. See: https://reactjs.org/docs/events.html
+    if (!window.debouncedOnChange) {
+        window.debouncedOnChange =  debounce(() => { editTicker(event.target.value)}, 500)
+      }
+    window.debouncedOnChange()
+  }
   const classes = useStyles()
   return (
     <div className={classes.grow}>
@@ -96,8 +103,7 @@ const PrimarySearchAppBar = ({ticker, editTicker}) => {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
-              value={ticker}
-              onChange={event => editTicker(event.target.value)}
+              onChange={debouncedOnChange}
             />
           </div>
           <div className={classes.grow} />
@@ -108,13 +114,10 @@ const PrimarySearchAppBar = ({ticker, editTicker}) => {
 }
 
 PrimarySearchAppBar.propTypes = {
-  ticker: PropTypes.string.isRequired,
   editTicker: PropTypes.func.isRequired
 }
 
-export const mapStateToProps = store => ({
-  ticker: store.ticker
-})
+export const mapStateToProps = () => ({})
 
 export const mapDispatchToProps = dispatch => ({
   editTicker: ticker => dispatch(actions.editTicker(ticker))

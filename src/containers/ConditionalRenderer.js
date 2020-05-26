@@ -62,9 +62,9 @@ class ConditionalRenderer extends Component {
         {!summaryIsFetching && ticker && summaryJson && !isSummaryError &&
         <Summary
           companyName={summaryJson.companyName}
-          employees={summaryJson.employees}
-          industry={summaryJson.industry}
-          sector={summaryJson.sector}
+          totalRevenue={summaryJson.income[0].totalRevenue}
+          grossProfit={summaryJson.income[0].grossProfit}
+          netIncome={summaryJson.income[0].netIncome}
         />}
         {timeseriesIsFetching && <CircularProgress />}
         {!timeseriesIsFetching && ticker && isTimeseriesError && <Typography color="error">{timeseriesJson}</Typography>}

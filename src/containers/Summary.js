@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const Summary = ({companyName, employees, industry, sector}) => {
+const Summary = ({ companyName, totalRevenue, grossProfit, netIncome }) => {
   const classes = useStyles()
 
   return (
@@ -40,8 +40,8 @@ const Summary = ({companyName, employees, industry, sector}) => {
           xs={12}
         >
           <SummaryCard 
-            label="Number of Employees"
-            value={employees && employees.toLocaleString() || ''}
+            label="Total Revenue ($)"
+            value={totalRevenue && totalRevenue.toLocaleString() || ''}
           />
         </Grid>
         <Grid
@@ -52,8 +52,8 @@ const Summary = ({companyName, employees, industry, sector}) => {
           xs={12}
         >
           <SummaryCard 
-            label="Industry"
-            value={industry}
+            label="Gross Profit ($)"
+            value={grossProfit && grossProfit.toLocaleString() || ''}
           />
         </Grid>
         <Grid
@@ -64,8 +64,8 @@ const Summary = ({companyName, employees, industry, sector}) => {
           xs={12}
         >
           <SummaryCard 
-            label="Sector"
-            value={sector}
+            label="Net Income ($)"
+            value={netIncome && netIncome.toLocaleString() || ''}
           />
         </Grid>
       </Grid>
@@ -75,9 +75,9 @@ const Summary = ({companyName, employees, industry, sector}) => {
 
 Summary.propTypes = {
   companyName: PropTypes.string.isRequired,
-  employees: PropTypes.number.isRequired,
-  industry: PropTypes.string.isRequired,
-  sector: PropTypes.string.isRequired
+  totalRevenue: PropTypes.number.isRequired,
+  grossProfit: PropTypes.number.isRequired,
+  netIncome: PropTypes.number.isRequired
 }
 
 export default Summary

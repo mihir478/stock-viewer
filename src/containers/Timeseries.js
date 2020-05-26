@@ -54,9 +54,9 @@ const Timeseries = props => {
     ]
   }
 
-  const intervalMin = Math.min(...closePrices)
-  const intervalMax = Math.max(...closePrices)
-  const intervalMean = Number(closePrices.reduce((acc, value) => (acc + value)) / closePrices.length).toFixed(2)
+  const intervalMin = `${Math.min(...closePrices)}`
+  const intervalMax = `${Math.max(...closePrices)}`
+  const intervalMean = `${Number(closePrices.reduce((acc, value) => (acc + value)) / closePrices.length).toFixed(2)}`
 
   return (
     <div className={classes.root}>
@@ -121,7 +121,7 @@ const Timeseries = props => {
           xl={3}
           xs={12}
         >
-          <SummaryCard value={intervalMax} label="Interval High" />
+          <SummaryCard value={intervalMax} label="Interval High ($)" />
         </Grid>
         <Grid
           item
@@ -130,7 +130,7 @@ const Timeseries = props => {
           xl={3}
           xs={12}
         >
-          <SummaryCard value={intervalMin} label="Interval Low" />
+          <SummaryCard value={intervalMin} label="Interval Low ($)" />
         </Grid>
         <Grid
           item
@@ -139,7 +139,7 @@ const Timeseries = props => {
           xl={3}
           xs={12}
         >
-          <SummaryCard value={intervalMean} label="Interval Average" />
+          <SummaryCard value={intervalMean} label="Interval Average ($)" />
         </Grid>
       </Grid>
     </div>
